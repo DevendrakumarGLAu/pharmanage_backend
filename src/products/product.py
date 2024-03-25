@@ -12,35 +12,18 @@ class Product:
     def __init__(self):
         self.db_connection = Dbconnect()
 
-    def save_product(self, category, quantity, productName,costPrice ,sellingPrice):
+    def save_product(self, category, quantity, productName, costPrice, sellingPrice, manufacturingDate, expiryDate):
         connection = self.db_connection.dbconnects()
         if connection:
             try:
                 cursor = connection.cursor()
-                sql_query = "INSERT INTO products (category, quantity, productName,costPrice ,sellingPrice) VALUES (%s, %s, %s,%s, %s)"
-                cursor.execute(sql_query, (category, quantity, productName,costPrice ,sellingPrice))
+                sql_query = "INSERT INTO products (category, quantity, productName,costPrice ,sellingPrice, manufacturingDate, expiryDate) VALUES (%s, %s, %s,%s, %s,%s, %s)"
+                cursor.execute(sql_query, (category, quantity, productName,costPrice ,sellingPrice, manufacturingDate, expiryDate))
                 connection.commit()
                 cursor.close()
                 connection.close()
 
                 return {"message": "Data saved successfully"}
-            except Exception as e:
-                return {"error": str(e)}
-        else:
-            return {"message": "Failed to connect to MySQL database"}
-    # @statistics
-    def update_product(self, id, name, qty, amount):
-        connection = self.db_connection.dbconnects()
-        if connection:
-            try:
-                cursor = connection.cursor()
-                sql_query = "UPDATE addproduct SET name = %s, qty = %s, amount = %s WHERE id = %s"
-                cursor.execute(sql_query, (name, qty, amount, id))
-                connection.commit()
-                cursor.close()
-                connection.close()
-
-                return {"message": "Data updated successfully"}
             except Exception as e:
                 return {"error": str(e)}
         else:

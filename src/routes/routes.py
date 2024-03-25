@@ -10,8 +10,11 @@ class Routes:
         productName = fetch_params.fetch_parameter(request, 'productName', type=int)
         costPrice = fetch_params.fetch_parameter(request, 'costPrice', type=int)
         sellingPrice = fetch_params.fetch_parameter(request, 'sellingPrice', type=int)
-        result = Product().save_product(category, quantity, productName,costPrice ,sellingPrice)
+        manufacturingDate = fetch_params.fetch_parameter(request, 'manufacturingDate', type=str)  # Change type as needed
+        expiryDate = fetch_params.fetch_parameter(request, 'expiryDate', type=str)  # Change type as needed
+        result = Product().save_product(category, quantity, productName, costPrice, sellingPrice, manufacturingDate, expiryDate)
         return result
+
 
     @staticmethod
     def update_product(request):
