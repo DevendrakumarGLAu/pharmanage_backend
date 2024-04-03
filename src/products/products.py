@@ -27,9 +27,10 @@ class Product:
                 expiry_date_str = expiry_date_obj.strftime('%Y-%m-%d')
                 # Update query with id placeholder
                 remaining_stock = quantity
-                sql_query = f"UPDATE products SET category=%s,category_id=%s,product_id=%s, quantity=%s, productName=%s, costPrice=%s, manufacturingDate=%s, expiryDate=%s, remaining_stock=%s WHERE id=%s"
+                CostPerPiece =float(costPrice / quantity)
+                sql_query = f"UPDATE products SET category=%s,category_id=%s,product_id=%s, quantity=%s, productName=%s, costPrice=%s, manufacturingDate=%s, expiryDate=%s, remaining_stock=%s,CostPerPiece=%s WHERE id=%s"
                 cursor.execute(sql_query, (
-                    category,category_id,product_id, quantity, productName, costPrice, manufacturing_date_str, expiry_date_str,remaining_stock, id))
+                    category,category_id,product_id, quantity, productName, costPrice, manufacturing_date_str, expiry_date_str,remaining_stock,CostPerPiece, id))
                 connection.commit()
                 cursor.close()
                 connection.close()
@@ -57,10 +58,14 @@ class Product:
 
                     return {"message": "Please edit Quantity in stock, Product already exists.", "status": "error"}
                 remaining_stock += int(quantity)
+                costPrice1 = float(costPrice)
+                quantity1 = float(quantity)
+                CostPerPiece =costPrice1/quantity1
+                print(CostPerPiece)
                 # Insert query
-                sql_query = "INSERT INTO products (category,category_id,product_id, quantity, productName, costPrice,  manufacturingDate, expiryDate,remaining_stock) VALUES (%s, %s, %s, %s, %s, %s,%s,%s,%s)"
+                sql_query = "INSERT INTO products (category,category_id,product_id, quantity, productName, costPrice,  manufacturingDate, expiryDate,remaining_stock,CostPerPiece) VALUES (%s, %s, %s, %s, %s, %s,%s,%s,%s, %s)"
                 cursor.execute(sql_query, (
-                    category,category_id,product_id, quantity, productName, costPrice,  manufacturingDate, expiryDate,remaining_stock))
+                    category,category_id,product_id, quantity, productName, costPrice,  manufacturingDate, expiryDate,remaining_stock,CostPerPiece))
                 connection.commit()
                 cursor.close()
                 connection.close()
