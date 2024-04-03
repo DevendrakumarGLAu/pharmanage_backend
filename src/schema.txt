@@ -13,8 +13,11 @@ CREATE TABLE `products` (
   `net_sellingPrice` int DEFAULT NULL,
   `Total_sales` int DEFAULT NULL,
   `total_quantity_sold` int DEFAULT NULL,
+  `category_id` int DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
+  `CostPerPiece` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 CREATE TABLE signup (
