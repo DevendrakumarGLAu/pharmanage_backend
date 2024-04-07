@@ -113,8 +113,8 @@ class DataTransfer:
             if product_data['sell_quantity'] is None:
                 product_data['sell_quantity'] = 0
 
-            print("reamaing stock",product_data['remaining_stock'])
-            print("quantity",product_data['quantity'])
+            # print("reamaing stock",product_data['remaining_stock'])
+            # print("quantity",product_data['quantity'])
             # Calculate remaining_stock after the sale
 
             remaining_stock = product_data['remaining_stock'] - sell_quantity
