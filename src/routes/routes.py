@@ -1,6 +1,7 @@
 from flask import jsonify
 
 from src.DataTransfer_job.data_transfer_jobs import DataTransfer
+from src.bill_payment.bill_payment import Bill_payments
 from src.fetchParameter.Fetchparameter import Fetchparameters
 from src.login.login import Login
 from src.products.products import Product
@@ -86,5 +87,17 @@ class Routes:
         fetch_params = Fetchparameters()
         category_id = fetch_params.fetch_parameter(request, 'category_id', type=str)
         return Product.get_products_name(category_id)
+
+    @staticmethod
+    def save_order(request):
+        fetch_params = Fetchparameters()
+        name = fetch_params.fetch_parameter(request,'name', type = str)
+        mobile = fetch_params.fetch_parameter(request, 'mobile', type=str)
+        data = request.get_json()
+        orders = data["orders"]
+        result = Bill_payments.save_orders(name,mobile,orders)
+        return result
+
+
 
 

@@ -58,4 +58,23 @@ payload for prduct name -
   }
 }
 
-}
+//for print bill
+
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    mobile VARCHAR(15)
+);
+
+CREATE TABLE order_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT,
+    sno INT,
+    category INT,
+    product INT,
+    quantity INT,
+    product_id INT,
+    product_name VARCHAR(255),
+    FOREIGN KEY (order_id) REFERENCES orders(id)
+);
+
