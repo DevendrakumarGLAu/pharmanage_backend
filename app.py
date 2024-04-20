@@ -53,6 +53,9 @@ def product_sells():
 def login_api():
     return Routes.login_api(request)
 
+@app.route('/save_order',methods= METHODS)
+def save_order():
+    return Routes.save_order(request)
 
 if __name__ == '__main__':
     app.run(debug=True)
