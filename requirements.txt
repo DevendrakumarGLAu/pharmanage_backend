@@ -4,7 +4,6 @@ jupyter==1.0.0
 pip==22.3.1
 panel==0.14.3
 attrs==22.1.0
-zlib==1.2.13
 pathlib==1.0.1
 wheel==0.38.4
 openssl==1.1.1t
