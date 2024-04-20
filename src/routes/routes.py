@@ -2,16 +2,14 @@ from flask import jsonify
 
 from src.DataTransfer_job.data_transfer_jobs import DataTransfer
 from src.bill_payment.bill_payment import Bill_payments
-from src.fetchParameter.Fetchparameter import Fetchparameters
+from src.fetchParameter.fetchparameter import Fetchparameters
 
 from src.login.login import Login
 from src.products.products import Product
 
-
 class Routes:
     @staticmethod
     def addproduct(request):
-        # fetch_params = Fetchparameters()
         id = Fetchparameters.fetch_parameter(request, 'id', type=int)
         category = Fetchparameters.fetch_parameter(request, 'category', type=str)
         category_id = Fetchparameters.fetch_parameter(request, 'category_id', type=int)
@@ -29,12 +27,6 @@ class Routes:
             result = Product.save_product(category,category_id,product_id, quantity, productName, costPrice, manufacturingDate, expiryDate)
         return result
 
-    # @staticmethod
-    # def get_product(request):
-    #     fetch_params = Fetchparameters()
-    #     id = Fetchparameters.fetch_parameter(request, 'id', type=int)
-    #     result = Product().get_product_by_id(id)
-    #     return result
     @staticmethod
     def get_product(request):
         id = Fetchparameters.fetch_parameter(request, 'id', type=int)
@@ -48,7 +40,6 @@ class Routes:
 
     @staticmethod
     def db_operations(request):
-        # fetch_params = Fetchparameters()
         id = Fetchparameters.fetch_parameter(request, 'id', type=int)
         table_name = Fetchparameters.fetch_parameter(request, 'table_name', type=str)
         action_mode = Fetchparameters.fetch_parameter(request,'action')
@@ -68,14 +59,12 @@ class Routes:
 
     @staticmethod
     def login_api(request):
-        # fetch_params = Fetchparameters()
         email = Fetchparameters.fetch_parameter(request, 'email', type=str)
         password= Fetchparameters.fetch_parameter(request,'password',type= str)
         return Login.login_api(email,password)
 
     @staticmethod
     def sell_product(request):
-        # fetch_params= Fetchparameters()
         id = Fetchparameters.fetch_parameter(request, 'product_id', type=int)
         sell_quantity=Fetchparameters.fetch_parameter(request, 'sell_quantity', type=int)
         unit_sellingPrice = Fetchparameters.fetch_parameter(request, 'unit_sellingPrice', type=int)
@@ -84,19 +73,16 @@ class Routes:
 
     @staticmethod
     def get_category_name(request):
-        # fetch_params= Fetchparameters()
         Table_name = Fetchparameters.fetch_parameter(request, 'Table_name', type=str)
         return Product.get_category_id(Table_name)
 
     @staticmethod
     def get_products_by_category(request):
-        # fetch_params = Fetchparameters()
         category_id = Fetchparameters.fetch_parameter(request, 'category_id', type=str)
         return Product.get_products_name(category_id)
 
     @staticmethod
     def save_order(request):
-        # fetch_params = Fetchparameters()
         name = Fetchparameters.fetch_parameter(request,'name', type = str)
         mobile = Fetchparameters.fetch_parameter(request, 'mobile', type=str)
         data = request.get_json()
