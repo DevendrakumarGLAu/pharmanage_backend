@@ -51,11 +51,14 @@ class Routes:
         elif action_mode == "delete":
             row_ids = Fetchparameters.fetch_parameter(request, 'row_ids', )
             result = DataTransfer.delete_data_operation(table_name, row_ids)
+        elif action_mode == "update":
+            row_ids = Fetchparameters.fetch_parameter(request, 'id' )
+            column_data = Fetchparameters.fetch_parameter(request, 'column_data')
+            result = DataTransfer.update_data_operation(row_ids,column_data,table_name)
         else:
             column_data = Fetchparameters.fetch_parameter(request, 'column_data')
             result = DataTransfer.save_data_operation(table_name, column_data, action_mode)
         return result
-
 
 
     @staticmethod

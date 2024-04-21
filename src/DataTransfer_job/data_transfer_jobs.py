@@ -8,6 +8,7 @@ from src.DB_connect.dbconnection import Dbconnect
 import json
 
 from src.dataframe_df.dataframe_operations import Dataframe_pandas
+from src.validation.validations import Validators
 
 
 class DataTransfer:
@@ -35,16 +36,20 @@ class DataTransfer:
     @staticmethod
     def save_data_operation(table_name, column_data, action):
         try:
-            # print("line 38",table_name)
-            # print("line 39", column_data)
             db_connection = Dbconnect()
             connection = db_connection.dbconnects()
             validation_flag = 0
+            if table_name == 'vendors':
+                validation_result = Validators.validate_vendor_data(column_data, connection)
+                if validation_result['status'] == 'error':
+                    return validation_result
+
             if table_name == 'category' or table_name == 'productname':
                 new_name = column_data['name']
                 duplicate_check_result = DataTransfer.check_duplicate(table_name,new_name)
                 if duplicate_check_result['status'] == 'error':
                     return duplicate_check_result
+
             if connection:
                 column_data_json =column_data
                 data_set = pd.json_normalize(column_data_json)
@@ -183,3 +188,32 @@ class DataTransfer:
         else:
             return {'status': 'error', 'message': 'Failed to connect to the database'}
 
+    @staticmethod
+    def update_data_operation(row_id, column_data, table_name):
+        try:
+            db_connection = Dbconnect()
+            connection = db_connection.dbconnects()
+            if connection:
+                # Convert column_data to a DataFrame
+                data_df = pd.DataFrame([column_data])
+
+                # Construct the SET clause for the SQL update query
+                set_clause = ', '.join([f"{key} = '{value}'" for key, value in column_data.items()])
+
+                # Construct the SQL update query
+                update_query = f"UPDATE {table_name} SET {set_clause} WHERE id = {row_id}"
+
+                # Execute the update query
+                cursor = connection.cursor()
+                cursor.execute(update_query)
+                connection.commit()
+
+                # Check if any rows were affected
+                if cursor.rowcount > 0:
+                    return {'status': 'success', 'message': 'Data updated successfully'}
+                else:
+                    return {'status': 'error', 'message': 'No rows were updated'}
+            else:
+                return {'status': 'error', 'message': 'Failed to connect to the database'}
+        except Exception as e:
+            return {'status': 'error', 'message': str(e)}
