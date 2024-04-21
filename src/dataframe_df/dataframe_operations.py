@@ -6,8 +6,7 @@ class Dataframe_pandas:
     @staticmethod
     def read_sql_as_df(query):
         try:
-            db_connection= Dbconnect()
-            connection = db_connection.dbconnects()
+            connection = Dbconnect.dbconnects()
             cursor = connection.cursor()
             cursor.execute(query)
             result = cursor.fetchall()

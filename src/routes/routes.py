@@ -2,6 +2,7 @@ from flask import jsonify
 
 from src.DataTransfer_job.data_transfer_jobs import DataTransfer
 from src.bill_payment.bill_payment import Bill_payments
+from src.common.get_Data import GetData
 from src.fetchParameter.fetchparameter import Fetchparameters
 
 from src.login.login import Login
@@ -90,6 +91,14 @@ class Routes:
         result = Bill_payments.save_orders(name,mobile,orders)
         return result
 
+
+    @staticmethod
+    def getData_common(request):
+        id = Fetchparameters.fetch_parameter(request,'id', type = int)
+        Table_name = Fetchparameters.fetch_parameter(request, 'Table_name', type=str)
+        print(Table_name)
+        result = GetData.getData_common(id,Table_name)
+        return result
 
 
 

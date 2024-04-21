@@ -78,3 +78,12 @@ CREATE TABLE order_items (
     FOREIGN KEY (order_id) REFERENCES orders(id)
 );
 
+
+CREATE TABLE vendors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    vendorName VARCHAR(255) NOT NULL,
+    productName VARCHAR(255) NOT NULL,
+    companyName VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    mobile VARCHAR(15)
+);

@@ -57,5 +57,9 @@ def login_api():
 def save_order():
     return Routes.save_order(request)
 
+@app.route('/getData_common', methods = METHODS)
+def getData_common():
+    return Routes.getData_common(request)
+
 if __name__ == '__main__':
     app.run(debug=True)

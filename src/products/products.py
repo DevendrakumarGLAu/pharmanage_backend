@@ -96,7 +96,7 @@ class Product:
         except Exception as e:
             return jsonify({'error': str(e)})
 
-    def get_product_by_id(self, id):
+    def get_product_by_id(self,id):
         try:
             sql_query = f"""SELECT * FROM products WHERE id = {id}"""
             # Pass the id parameter to the read_sql_as_df function
