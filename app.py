@@ -57,6 +57,11 @@ def login_api():
 def save_order():
     return Routes.save_order(request)
 
+@app.route('/get_saved_order', methods= METHODS)
+def get_saved_order():
+    return Routes.get_saved_order()
+
+
 @app.route('/getData_common', methods = METHODS)
 def getData_common():
     return Routes.getData_common(request)

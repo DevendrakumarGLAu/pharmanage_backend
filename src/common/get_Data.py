@@ -2,6 +2,7 @@ import json
 
 from flask import jsonify
 
+from src.DB_connect.dbconnection import Dbconnect
 from src.dataframe_df.dataframe_operations import Dataframe_pandas
 
 
@@ -25,3 +26,55 @@ class GetData:
             return {"status": str(e),
                     "message": "failed to fetch Data"}
 
+    @staticmethod
+    def get_saved_order():
+        connection = Dbconnect.dbconnects()
+        if connection:
+            cursor = connection.cursor(dictionary=True)
+            try:
+                cursor.execute("""
+                    SELECT 
+                        o.name, o.mobile,
+                        oi.sno, oi.category_id, oi.product_id, oi.quantity, oi.category_name, oi.product_name
+                    FROM 
+                        Orders o
+                    JOIN 
+                        OrderDetails oi ON o.order_id = oi.order_id
+                """)
+                saved_orders = cursor.fetchall()
+
+                # Initialize variables to store name, mobile, and orders
+                name = None
+                mobile = None
+                orders = []
+
+                # Iterate over the saved_orders to extract name, mobile, and orders
+                for order in saved_orders:
+                    name = order['name']
+                    mobile = order['mobile']
+                    orders.append({
+                        "sno": order['sno'],
+                        "category_id": order['category_id'],
+                        "product_id": order['product_id'],
+                        "quantity": order['quantity'],
+                        "category_name": order['category_name'],
+                        "product_name": order['product_name']
+                    })
+
+                # Construct the response dictionary
+                response = {
+                    "name": name,
+                    "mobile": mobile,
+                    "orders": orders,
+                                    }
+
+                return {"data":response,
+                        "message":"Data fetch successfully",
+                        "status":"success"}
+            except Exception as e:
+                return {"error": str(e), "status": "error"}
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Failed to connect to the database", "status": "error"}

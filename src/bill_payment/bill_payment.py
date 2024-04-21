@@ -28,9 +28,32 @@ class Bill_payments:
                     """, (order_id, sno, category_id, product_id, quantity, category_name, product_name))
 
                 connection.commit()
-                return {"message": "Order saved successfully", "status": "success"}
+                return {"message": "Order saved successfully", "status": "success", "order_id": order_id}
             except Exception as e:
                 connection.rollback()
+                return {"error": str(e), "status": "error"}
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Failed to connect to the database", "status": "error"}
+
+    @staticmethod
+    def get_order_details(order_id):
+        db_connection = Dbconnect()
+        connection = db_connection.dbconnects()
+        if connection:
+            cursor = connection.cursor(dictionary=True)  # Set dictionary cursor to get results as dictionaries
+            try:
+                # Query to retrieve order details for a specific order ID
+                cursor.execute("""
+                        SELECT * 
+                        FROM OrderDetails 
+                        WHERE order_id = %s
+                    """, (order_id,))
+                order_details = cursor.fetchall()
+                return {"order_details": order_details, "status": "success"}
+            except Exception as e:
                 return {"error": str(e), "status": "error"}
             finally:
                 cursor.close()

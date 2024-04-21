@@ -94,14 +94,16 @@ class Routes:
         result = Bill_payments.save_orders(name,mobile,orders)
         return result
 
+    @staticmethod
+    def get_saved_order():
+        result = GetData.get_saved_order()
+        return result
 
     @staticmethod
     def getData_common(request):
         id = Fetchparameters.fetch_parameter(request,'id', type = int)
         Table_name = Fetchparameters.fetch_parameter(request, 'Table_name', type=str)
-        print(Table_name)
         result = GetData.getData_common(id,Table_name)
         return result
-
 
 
