@@ -98,4 +98,6 @@ CREATE TABLE users_details (
     role ENUM('admin', 'user') NOT NULL,
     action TINYINT(1) NOT NULL
 );
+alter table users_details
+add column confirmPassword VARCHAR(255) NOT NULL;
 
