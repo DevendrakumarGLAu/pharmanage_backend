@@ -10,7 +10,10 @@ class GetData:
     @staticmethod
     def getData_common(id, Table_name):
         try:
-            sql_query = f"""SELECT * FROM {Table_name} WHERE id = {id}"""
+            if id:
+                sql_query = f"""SELECT * FROM {Table_name} WHERE id = {id}"""
+            else:
+                sql_query = f"""SELECT * FROM {Table_name}"""
             # Pass the id parameter to the read_sql_as_df function
             df = Dataframe_pandas.read_sql_as_df(sql_query)
             if df is not None:
