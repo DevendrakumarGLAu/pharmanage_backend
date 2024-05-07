@@ -66,5 +66,9 @@ def get_saved_order():
 def getData_common():
     return Routes.getData_common(request)
 
+@app.route('/getData_common1', methods = METHODS)
+def getData_common1():
+    return Routes.getData_common1(request)
+
 if __name__ == '__main__':
     app.run(debug=True)
