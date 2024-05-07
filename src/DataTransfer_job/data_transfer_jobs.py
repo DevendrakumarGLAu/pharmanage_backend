@@ -39,11 +39,14 @@ class DataTransfer:
             db_connection = Dbconnect()
             connection = db_connection.dbconnects()
             validation_flag = 0
-            if table_name == 'vendors':
-                validation_result = Validators.validate_vendor_data(column_data, connection)
+            if table_name == 'vendors' or table_name == 'users_details':
+                validation_result = Validators.validate_vendor_data(column_data, connection, table_name)
                 if validation_result['status'] == 'error':
                     return validation_result
-
+            # if table_name == 'users_details':
+            #     validation_result = Validators.Validator_userDetails(column_data, connection,table_name)
+            #     if validation_result['status'] == 'error':
+            #         return validation_result
             if table_name == 'category' or table_name == 'productname':
                 new_name = column_data['name']
                 duplicate_check_result = DataTransfer.check_duplicate(table_name,new_name)

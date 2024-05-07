@@ -13,7 +13,7 @@ class GetData:
             if id:
                 sql_query = f"""SELECT * FROM {Table_name} WHERE id = {id}"""
             else:
-                sql_query = f"""SELECT * FROM {Table_name}"""
+                sql_query = f"""SELECT * FROM {Table_name} ORDER BY id DESC"""
             # Pass the id parameter to the read_sql_as_df function
             df = Dataframe_pandas.read_sql_as_df(sql_query)
             if df is not None:
