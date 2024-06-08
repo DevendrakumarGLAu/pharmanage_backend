@@ -1,4 +1,6 @@
 from src.DB_connect.dbconnection import Dbconnect
+# from src.JWTTokens.generate_token import JwtTokens
+from src.JWTTokens.generate_token import generate_token
 
 
 class Login:
@@ -11,12 +13,14 @@ class Login:
         if connection:
             try:
                 cursor = connection.cursor()
-                query = f"""SELECT * FROM signup WHERE email = '{email}' AND password = '{password}'"""
+                query = f"""SELECT * FROM users_details WHERE email = '{email}' AND password = '{password}'"""
                 cursor.execute(query)
                 result = cursor.fetchone()
                 if result:
+                    token = generate_token(email)
                     return {
                         "data":result,
+                        "token": token,
                         "message":"login succesful",
                         "status":"success"
                     }
@@ -27,11 +31,9 @@ class Login:
             except Exception as e:
                 return {"error": str(e)}
             finally:
-                # Close cursor and database connection
                 cursor.close()
                 connection.close()
         else:
-            # Failed to connect to the database
             return {"error": "Failed to connect to the database"}
 
 

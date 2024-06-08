@@ -4,7 +4,6 @@ from src.DataTransfer_job.data_transfer_jobs import DataTransfer
 from src.bill_payment.bill_payment import Bill_payments
 from src.common.get_Data import GetData
 from src.fetchParameter.fetchparameter import Fetchparameters
-
 from src.login.login import Login
 from src.products.products import Product
 
