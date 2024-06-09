@@ -6,6 +6,7 @@ from flask_cors import CORS
 
 from src.DB_connect.dbconnection import Dbconnect
 from src.app_decorator.app_decorator import app_decorator
+from src.common.get_Data import GetData
 from src.config import SECRET_KEY
 from src.routes.routes import Routes
 
@@ -78,6 +79,10 @@ def get_saved_order():
 @app_decorator
 def getData_common():
     return Routes.getData_common(request)
+
+@app.route('/sidebarMenuConfig', methods = METHODS)
+def sidebar_menu_config():
+    return GetData.sidebar_menu_config()
 
 if __name__ == '__main__':
     app.run(debug=True)
